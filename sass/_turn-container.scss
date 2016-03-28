@@ -1,0 +1,29 @@
+.turn-container {
+  display: flex;
+  position: absolute;
+  bottom: 1rem;
+  left: 14rem;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  z-index: 1;
+  div {
+    .image-view-purchased {
+      width: 4rem;
+      height: 6rem;
+      margin-right: .7rem;
+    }
+  }
+  h4 {
+    top: -100px;
+    left: 0;
+    position: absolute;
+  }
+}
+
+.image-view-purchased-selected {
+  position: fixed;
+  height: 50rem;
+  left: 50%;
+  top: 3rem;
+  transform: translate(-50%, 0);
+}

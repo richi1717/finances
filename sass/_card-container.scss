@@ -1,0 +1,50 @@
+.card-container {
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-left: 50%;
+  margin-top: 30px;
+  transform: translate(-50%, 0%);
+  width: 750px;
+  div {
+    justify-content: center;
+    flex: 1;
+    padding: 2px;
+    div {
+      img {
+        height: 100px;
+        width: 80px;
+      }
+    }
+  }
+  div {
+    .btn-purchase {
+      position: fixed;
+      height: 6rem;
+      width: 15rem;
+      font-size: 3rem;
+      top: 24rem;
+    }
+    .left {
+      left: 11.4rem;
+      transform: translate(-50%, -50%);
+    }
+    .right {
+      right: 11.4rem;
+      transform: translate(50%, -50%);
+    }
+  }
+}
+
+.expansion {
+  width: 500px;
+  div {
+    .left {
+      left: -1.4rem;
+    }
+    .right {
+      right: -1.4rem;
+    }
+  }
+}
