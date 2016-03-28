@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { fetchBills, fetchCash } from '../actions/index';
 import Cash from '../components/cash';
 import Payments from '../components/payments';
-let paycheck = 1723.41;
+let paycheck = 100;
 paycheck = paycheck * 4;
 let total;
 let tithe = paycheck * .10;
