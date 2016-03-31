@@ -67,13 +67,12 @@ export function makePayment(props, amount) {
 
 export function addNew(props) {
   const url = `${ROOT_URL}/bills`;
-  // axios.delete(url);
   const request = axios.post(url, {
     "name": props.name,
     "amount": props.amount,
     "due": props.due,
     "debt": props.debt,
-    "payoff": amount
+    "payoff": props.payoff
   });
   return {
     type: ADD_BILL,

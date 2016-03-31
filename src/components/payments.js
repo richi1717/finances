@@ -37,9 +37,9 @@ class Payments extends Component {
     if (this.state.buttonShow) {
       return (
         <div className="btn-container">
-        <button onClick={this.handlePayment} className="btn btn-success">Make Payment</button>
-        <button onClick={this.handleRemove} className="btn btn-info">Remove Row</button>
-        <button onClick={this.handleDelete} className="btn btn-danger">Delete</button>
+          <button onClick={this.handlePayment} className="btn btn-success">Make Payment</button>
+          <button onClick={this.handleRemove} className="btn btn-info">Remove Row</button>
+          <button onClick={this.handleDelete} className="btn btn-danger">Delete</button>
         </div>
       );
     }
@@ -56,9 +56,8 @@ class Payments extends Component {
   }
 
   handleDelete() {
-    console.log('delete');
+    this.props.removeRow(this.props.bills.id);
     this.props.deleteRow(this.props.bills.id);
-    this.props.removeRow(this.props.bills.name);
   }
 
   renderBills() {

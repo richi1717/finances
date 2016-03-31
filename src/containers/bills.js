@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchBills, fetchCash } from '../actions/index';
+import { fetchBills, fetchCash, addNew } from '../actions/index';
 import Cash from '../components/cash';
 import Payments from '../components/payments';
 let paycheck = 1723.41;
@@ -13,9 +13,14 @@ class Bills extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      debt: false
+      debt: false,
+      showNew: false,
+      isDebt: true
     };
     this.addNew = this.addNew.bind(this);
+    this.createNew = this.createNew.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.debtSelect = this.debtSelect.bind(this);
   }
 
   componentWillMount() {
@@ -30,13 +35,59 @@ class Bills extends Component {
       {this.paycheck()}
       {this.state.debt ? this.renderTotalNoDebt(this.props.cash, this.props.bills) : this.renderTotal(this.props.cash, this.props.bills)}
       {this.paycheckMinusMoney()}
-      <button className="btn btn-secondary" onClick={this.addNew}>Add New Bill</button>
+      <button className="btn btn-secondary" onClick={this.createNew}>Add New Bill</button>
+      {this.addNew()}
       {this.state.debt ? this.renderWithOutDebt(this.props.bills) : this.renderBills(this.props.bills)}
       {this.renderCash(this.props.cash)}
     </div>;
   }
 
+  createNew() {
+    this.setState({ showNew: !this.state.showNew });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    let props = {
+      name: this.refs.name.value,
+      amount: this.refs.amount.value,
+      due: this.refs.due.value,
+      payoff: this.refs.payoff.value,
+      debt: this.state.isDebt
+    };
+    this.props.addNew(props);
+  }
+
+  debtSelect(event) {
+    if (event.target.checked && event.target === this.refs.debt) {
+      this.setState({ isDebt: true });
+    } else if (event.target.checked && event.target === this.refs.notDebt) {
+      this.setState({ isDebt: false });
+    }
+  }
+
   addNew() {
+    if (this.state.showNew) {
+      return (
+        <form onSubmit={this.handleSubmit} className="form-container">
+          <input ref="name" placeholder="Name of Bill" />
+          <input ref="amount" placeholder="Amount of Bill" />
+          <input ref="due" placeholder="Due Date Each Month" />
+          <input ref="payoff" placeholder="Payoff of Debt" />
+          <div className="input-group">
+            <span className="input-group-addon">
+              <input ref="debt" onChange={this.debtSelect} type="checkbox" />
+            </span>
+            <input type="text" className="form-control" placeholder="Debt" />
+            <span className="input-group-addon">
+              <input ref="notDebt" onChange={this.debtSelect} type="checkbox" />
+            </span>
+            <input type="text" className="form-control" placeholder="Not Debt" />
+          </div>
+          <button className="btn btn-info">Submit</button>
+        </form>
+      );
+    }
     // TODO
     // this.props.addNew();
   }
@@ -141,7 +192,7 @@ function mapStateToProps({ bills, cash, rowName }) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchBills, fetchCash }, dispatch);
+  return bindActionCreators({ fetchBills, fetchCash, addNew }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Bills);
