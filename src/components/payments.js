@@ -49,7 +49,7 @@ class Payments extends Component {
     this.props.deleteRow(this.props.bills.id);
     this.props.makePayment(this.props.bills, this.props.bills.payoff - this.props.bills.amount);
     this.setState({ buttonShow: false });
-    this.props.fetchBills();
+    setTimeout(() => {this.props.fetchBills();}, 2000);
   }
 
   handleRemove() {
