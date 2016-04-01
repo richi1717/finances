@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { fetchBills, fetchCash, addNew } from '../actions/index';
 import Cash from '../components/cash';
 import Payments from '../components/payments';
-let paycheck = 100;
+let paycheck = 1723.41;
 paycheck = paycheck * 4;
 let total;
 let tithe = paycheck * .10;
@@ -29,7 +29,6 @@ class Bills extends Component {
   }
 
   render() {
-    // console.log(this.props.bills, this.props.cash);
     return <div>
       <button className="btn btn-info" onClick={this.handleClick.bind(this)}>{this.state.debt ? "Show" : "Hide"} Debt?</button>
       {this.paycheck()}
@@ -56,6 +55,8 @@ class Bills extends Component {
       debt: this.state.isDebt
     };
     this.props.addNew(props);
+    this.setState({ showNew: false });
+    setTimeout(() => {this.props.fetchBills();}, 2000);
   }
 
   debtSelect(event) {
@@ -88,8 +89,6 @@ class Bills extends Component {
         </form>
       );
     }
-    // TODO
-    // this.props.addNew();
   }
 
   paycheck() {

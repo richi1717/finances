@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { removeRow, deleteRow, makePayment } from '../actions/index';
+import { removeRow, deleteRow, makePayment, fetchBills } from '../actions/index';
 import { today, dd } from '../utils/date';
 
 class Payments extends Component {
@@ -49,6 +49,7 @@ class Payments extends Component {
     this.props.deleteRow(this.props.bills.id);
     this.props.makePayment(this.props.bills, this.props.bills.payoff - this.props.bills.amount);
     this.setState({ buttonShow: false });
+    this.props.fetchBills();
   }
 
   handleRemove() {
@@ -68,7 +69,7 @@ class Payments extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ removeRow, deleteRow, makePayment }, dispatch);
+  return bindActionCreators({ removeRow, deleteRow, makePayment, fetchBills }, dispatch);
 }
 
 export default connect(null, mapDispatchToProps)(Payments);
