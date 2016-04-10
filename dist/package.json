@@ -1,0 +1,11 @@
+{
+  "name": "Finances",
+  "version": "0.1.0",
+  "description": "Budget Tool",
+  "main": "index.js",
+  "author": "richi jeffery",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}

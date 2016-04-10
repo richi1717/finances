@@ -20,7 +20,7 @@ class Payments extends Component {
   }
   render() {
 
-    console.log(today, dd, this.props.bills.due);
+    // console.log(today, dd, this.props.bills.due);
     return (
       <div>
         <button onClick={this.handleClick} className={this.props.bills.debt ? "btn btn-warning debt" : "btn btn-warning"}>{this.props.bills.name}</button>
@@ -77,6 +77,7 @@ class Payments extends Component {
   }
 
   handleDelete() {
+    console.log(this.props.bills.id);
     this.props.removeRow(this.props.bills.id);
     this.props.deleteRow(this.props.bills.id);
   }

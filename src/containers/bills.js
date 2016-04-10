@@ -29,6 +29,7 @@ class Bills extends Component {
   }
 
   render() {
+    console.log(this.props.bills);
     return <div>
       <button className="btn btn-info" onClick={this.handleClick.bind(this)}>{this.state.debt ? "Show" : "Hide"} Debt?</button>
       {this.paycheck()}
@@ -47,12 +48,19 @@ class Bills extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    // console.log(this.props.bills[0]);
+    let amount = 0;
+    for (let key in this.props.bills[0]) {
+      amount++;
+      // console.log(amount);
+    }
     let props = {
       name: this.refs.name.value,
       amount: this.refs.amount.value,
       due: this.refs.due.value,
-      payoff: this.refs.payoff.value,
-      debt: this.state.isDebt
+      payoff: this.refs.payoff.value ? this.refs.payoff.value : null,
+      debt: this.state.isDebt,
+      id: amount
     };
     this.props.addNew(props);
     this.setState({ showNew: false });
@@ -101,7 +109,7 @@ class Bills extends Component {
   }
 
   renderTotalNoDebt(cash, bills) {
-    bills = bills[0] ? bills[0].data : bills;
+    bills = bills[0] ? bills[0]: bills;
     let amount = 0;
     for (const key in bills) {
       if (this.props.rowName.indexOf(bills[key].id) < 0) {
@@ -110,7 +118,7 @@ class Bills extends Component {
         }
       }
     }
-    cash = cash[0] ? cash[0].data : cash;
+    cash = cash[0] ? cash[0]: cash;
     for (const key in cash) {
       amount = amount + cash[key].amount;
     }
@@ -119,14 +127,16 @@ class Bills extends Component {
   }
 
   renderTotal(cash, bills) {
-    bills = bills[0] ? bills[0].data : bills;
+    console.log(cash, bills);
+    bills = bills[0] ? bills[0]: bills;
     let amount = 0;
     for (const key in bills) {
       if (this.props.rowName.indexOf(bills[key].id) < 0) {
+        bills[key].amount = parseInt(bills[key].amount, 10);
         amount = amount + bills[key].amount;
       }
     }
-    cash = cash[0] ? cash[0].data : cash;
+    cash = cash[0] ? cash[0]: cash;
     for (const key in cash) {
       amount = amount + cash[key].amount;
     }
@@ -139,7 +149,7 @@ class Bills extends Component {
   }
 
   renderWithOutDebt(bills) {
-    bills = bills[0] ? bills[0].data : bills;
+    bills = bills[0] ? bills[0]: bills;
     const billsArray = [];
     let amount = 0;
     for (const key in bills) {
@@ -156,7 +166,7 @@ class Bills extends Component {
   }
 
   renderBills(bills) {
-    bills = bills[0] ? bills[0].data : bills;
+    bills = bills[0] ? bills[0]: bills;
     // console.log(bills);
     const billsArray = [];
     let amount = 0;
@@ -172,7 +182,7 @@ class Bills extends Component {
   }
 
   renderCash(cash, index) {
-    cash = cash[0] ? cash[0].data : cash;
+    cash = cash[0] ? cash[0]: cash;
     // console.log(cash);
     const cashArray = [];
     let amount = 0;

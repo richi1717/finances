@@ -19,13 +19,13 @@ module.exports = {
   ],
   output: {
     path: PATHS.build,
-    filename: 'bundle.js',
+    filename: 'dist/bundle.js',
     publicPath: '/'
   },
   devtool: "inline-source-map",
   plugins: [
     new HtmlwebpackPlugin({
-      title: 'Machi Koro',
+      title: 'Finances',
       template: 'build/index.html',
       inject: true
     }),
@@ -54,7 +54,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-         loaders: ["style", "css?sourceMap?root=.", "sass?sourceMap"],
+         loaders: ["style", "css?sourceMap?root=.", "sass?sourceMap"]
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,

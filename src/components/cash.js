@@ -51,17 +51,14 @@ export default class Cash extends Component {
   }
 
   addCash(data) {
-    console.log(data);
     const url = `${ROOT_URL}/cash/${data.id}`;
     axios.put(url, {
       name: data.name,
       amount: data.amount
     })
     .then(function (response) {
-      console.log(response);
     })
     .catch(function (response) {
-      console.log(response);
     });
   }
 }
