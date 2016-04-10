@@ -5,3 +5,4 @@ copy_package.json
 bundle.js
 paths
 dist/cf_bundle.js
+src/utils/paycheck.js
