@@ -57,7 +57,7 @@ class Payments extends Component {
     if (this.state.paymentShow) {
       return (
         <form onChange={() => {this.setState({ amount: this.refs.amount.value });}} onSubmit={this.handlePayment} className="form-container">
-          <input ref="amount" placeholder={this.state.amount} />
+          <input ref="amount" value={this.state.amount} />
           <button className="btn btn-info">Submit</button>
         </form>
       );
