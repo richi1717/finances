@@ -4,3 +4,4 @@ copy_bills.json
 copy_package.json
 bundle.js
 paths
+dist/cf_bundle.js

@@ -50,15 +50,16 @@ export function deleteRow(id) {
 }
 
 export function makePayment(props, amount) {
-  const urlPost = `${ROOT_URL}/bills${FIREBASE_API}`;
+  const urlPost = `${ROOT_URL}/bills/${props.id}/${FIREBASE_API}`;
   const url = `${ROOT_URL}/bills/${props.id}/${FIREBASE_API}`;
   // axios.delete(url);
-  const request = axios.post(urlPost, {
+  const request = axios.patch(urlPost, {
     "name": props.name,
     "amount": props.amount,
     "due": props.due,
     "debt": props.debt,
-    "payoff": amount
+    "payoff": amount,
+    "id": props.id
   });
   return {
     type: MAKE_PAYMENT,
