@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { ROOT_URL } from '../actions/index';
+import { ROOT_URL, FIREBASE_API, fetchCash } from '../actions/index';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 export default class Cash extends Component {
   constructor(props) {
@@ -15,9 +17,9 @@ export default class Cash extends Component {
   render() {
     return (
       <div>
-        {this.props.cash.amount !== 0 ? <button onClick={this.handleClick.bind(this)} className="btn btn-primary">{this.props.cash.name}</button> : null}
-        {this.props.cash.amount !== 0 ? this.showUpdate() : null}
-        {this.props.cash.amount !== 0 ? <button onClick={this.handleClick.bind(this)} className="btn btn-secondary">${this.props.total}</button> : null}
+        {parseFloat(this.props.cash.amount) !== 0 ? <button onClick={this.handleClick.bind(this)} className="btn btn-primary">{this.props.cash.name}</button> : null}
+        {parseFloat(this.props.cash.amount) !== 0 ? this.showUpdate() : null}
+        {parseFloat(this.props.cash.amount) !== 0 ? <button onClick={this.handleClick.bind(this)} className="btn btn-secondary">${this.props.total}</button> : null}
       </div>
     );
   }
@@ -51,8 +53,8 @@ export default class Cash extends Component {
   }
 
   addCash(data) {
-    const url = `${ROOT_URL}/cash/${data.id}`;
-    axios.put(url, {
+    const url = `${ROOT_URL}/cash/${data.id}${FIREBASE_API}`;
+    axios.patch(url, {
       name: data.name,
       amount: data.amount
     })
@@ -60,5 +62,14 @@ export default class Cash extends Component {
     })
     .catch(function (response) {
     });
+    setTimeout(() => {
+      this.props.fetchCash();
+    }, 200);
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ fetchCash }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(Cash);
