@@ -1,7 +1,19 @@
 .btn {
-  width: 110px;
-  margin: 10px 20px;
+  width: 115px;
+  margin: 0;
+  border-radius: 0;
+}
 
+.custom-btn {
+  width: 140px;
+}
+
+.btn-secondary {
+  border: 1px solid #aaa;
+  &:hover {
+    background-color: #aaa;
+    border: 1px solid #888;
+  }
 }
 
 .debt {
@@ -11,7 +23,7 @@
 .btn-container {
   position: absolute;
   width: 100%;
-  text-align: center;
+  // text-align: center;
   z-index: 2;
   background-color: lightgray;
 }
