@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { removeRow, deleteRow, makePayment, fetchBills } from '../actions/index';
-import { today, dd } from '../utils/date';
+import { removeRow, deleteRow, makePayment, fetchBills, addEffects, updateCheck, fetchAccountBalance } from '../actions/index';
+// import { today, dd } from '../utils/date';
+import { today as Today } from '../utils/date';
 
 class Payments extends Component {
   constructor(props) {
@@ -19,7 +21,6 @@ class Payments extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
   render() {
-
     // console.log(today, dd, this.props.bills.due);
     return (
       <div>
@@ -39,6 +40,7 @@ class Payments extends Component {
       buttonShow: !this.state.buttonShow,
       amount: this.props.bills.amount
     });
+    this.props.addEffects(this.props.blurEffects);
   }
 
   renderButtons() {
@@ -56,8 +58,8 @@ class Payments extends Component {
   paymentSelect() {
     if (this.state.paymentShow) {
       return (
-        <form onChange={() => {this.setState({ amount: this.refs.amount.value });}} onSubmit={this.handlePayment} className="form-container">
-          <input ref="amount" value={this.state.amount} />
+        <form onSubmit={this.handlePayment} className="form-container">
+          <input onChange={() => {this.setState({ amount: this.refs.amount.value });}} ref="amount" value={this.state.amount} />
           <button className="btn btn-info">Submit</button>
         </form>
       );
@@ -66,10 +68,18 @@ class Payments extends Component {
 
   handlePayment(event) {
     event.preventDefault();
-    this.props.deleteRow(this.props.bills.id);
+    const totalBalance = _.round(parseFloat(this.props.account[0].amount) - this.state.amount, 2);
+    const props = {
+      amount: totalBalance,
+      asof: Today
+    };
+    this.props.updateCheck(props);
     this.props.makePayment(this.props.bills, this.props.bills.payoff - this.state.amount);
     this.setState({ buttonShow: false, paymentShow: false });
-    setTimeout(() => {this.props.fetchBills();}, 2000);
+    setTimeout(() => {
+      this.props.fetchBills();
+      this.props.fetchAccountBalance();
+    }, 2000);
   }
 
   handleRemove() {
@@ -77,7 +87,6 @@ class Payments extends Component {
   }
 
   handleDelete() {
-    console.log(this.props.bills.id);
     this.props.removeRow(this.props.bills.id);
     this.props.deleteRow(this.props.bills.id);
   }
@@ -89,8 +98,12 @@ class Payments extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ removeRow, deleteRow, makePayment, fetchBills }, dispatch);
+function mapStateToProps({ blurEffects, account }) {
+  return { blurEffects, account };
 }
 
-export default connect(null, mapDispatchToProps)(Payments);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ removeRow, deleteRow, makePayment, fetchBills, addEffects, updateCheck, fetchAccountBalance }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Payments);
