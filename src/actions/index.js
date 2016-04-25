@@ -7,11 +7,14 @@ export const FIREBASE_API = '.json';
 
 export const FETCH_BILLS = 'FETCH_BILLS';
 export const FETCH_CASH = 'FETCH_CASH';
+export const FETCH_ACCOUNT = 'FETCH_ACCOUNT';
 export const REMOVE_ROW = 'REMOVE_ROW';
 export const DELETE_ROW = 'DELETE_ROW';
 export const MAKE_PAYMENT = 'MAKE_PAYMENT';
 export const ADD_CASH = 'ADD_CASH';
 export const ADD_BILL = 'ADD_BILL';
+export const ADD_EFFECTS = 'ADD_EFFECTS';
+export const POST_ACCOUNT = 'POST_ACCOUNT';
 
 export function fetchBills() {
   const url = `${ROOT_URL}/bills${FIREBASE_API}`;
@@ -29,6 +32,30 @@ export function fetchCash() {
 
   return {
     type: FETCH_CASH,
+    payload: request
+  };
+}
+
+export function fetchAccountBalance() {
+  const url = `${ROOT_URL}/account/0${FIREBASE_API}`;
+  const request = axios.get(url);
+
+  return {
+    type: FETCH_ACCOUNT,
+    payload: request
+  };
+}
+
+export function updateCheck(props) {
+  console.log(props);
+  const url = `${ROOT_URL}/account/0${FIREBASE_API}`;
+  const request = axios.patch(url, {
+    "amount": parseFloat(props.amount),
+    "asof": parseFloat(props.asof)
+  });
+
+  return {
+    type: POST_ACCOUNT,
     payload: request
   };
 }
@@ -51,15 +78,13 @@ export function deleteRow(id) {
 
 export function makePayment(props, amount) {
   const urlPost = `${ROOT_URL}/bills/${props.id}/${FIREBASE_API}`;
-  const url = `${ROOT_URL}/bills/${props.id}/${FIREBASE_API}`;
-  // axios.delete(url);
   const request = axios.patch(urlPost, {
     "name": props.name,
-    "amount": props.amount,
-    "due": props.due,
+    "amount": parseFloat(props.amount),
+    "due": parseFloat(props.due),
     "debt": props.debt,
-    "payoff": amount,
-    "id": props.id
+    "payoff": parseFloat(amount),
+    "id": parseFloat(props.id)
   });
   return {
     type: MAKE_PAYMENT,
@@ -71,14 +96,21 @@ export function addNew(props) {
   const url = `${ROOT_URL}/bills/${props.id}/${FIREBASE_API}`;
   const request = axios.put(url, {
     "name": props.name,
-    "amount": props.amount,
-    "due": props.due,
+    "amount": parseFloat(props.amount),
+    "due": parseFloat(props.due),
     "debt": props.debt,
-    "payoff": props.payoff,
-    "id": props.id
+    "payoff": parseFloat(props.payoff),
+    "id": parseFloat(props.id)
   });
   return {
     type: ADD_BILL,
     payload: request
+  };
+}
+
+export function addEffects(bool) {
+  return {
+    type: ADD_EFFECTS,
+    payload: bool
   };
 }
