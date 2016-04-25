@@ -6,3 +6,4 @@ bundle.js
 paths
 dist/cf_bundle.js
 src/utils/paycheck.js
+build/map/build.js.map
