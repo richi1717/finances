@@ -8,6 +8,9 @@ app.get('/*', function response(req, res) {
    res.sendFile(path.join(__dirname, '/' , 'index.html'));
 });
 
+app.get('/', function(request, response) {
+  response.render('dist/index')
+});
 // app.listen(8080, function () {
 //     console.log('Example app listening on port 8080!');
 // });
