@@ -4,11 +4,7 @@
   "description": "finance tracker",
   "main": "index.js",
   "scripts": {
-    "webpack-server": "webpack-dev-server --hot --progress --colors",
-    "web-server": "json-server -w bills.json",
-    "start": "npm run webpack-server",
-    "test": "mocha --opts mocha.opts",
-    "test:ci": "mocha -w --opts mocha.opts"
+    "start": "node app.js"
   },
   "author": "richi jeffery",
   "license": "we'll get to that",
