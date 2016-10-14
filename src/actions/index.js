@@ -47,7 +47,7 @@ export function fetchAccountBalance() {
 }
 
 export function updateCheck(props) {
-  console.log(props);
+  // console.log(props);
   const url = `${ROOT_URL}/account/0${FIREBASE_API}`;
   const request = axios.patch(url, {
     "amount": parseFloat(props.amount),

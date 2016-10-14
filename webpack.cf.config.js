@@ -6,7 +6,7 @@ module.exports = {
     entry: './src/index.js',
     output: {
         path: './dist/',
-        filename: 'cf_bundle.js',
+        filename: 'bundle.js',
         publicPath: '/'
     },
     module: {

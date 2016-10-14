@@ -11,9 +11,9 @@ if (mm < 10) {
     mm = '0' + mm;
 }
 today = mm + dd;
-if (today.indexOf(0) !== -1) {
-  today = today.slice(1);
-}
+// if (today && today.indexOf(0) !== -1) {
+  // today = today.slice(1);
+// }
 // today = mm+'/'+dd+'/'+yyyy;
 if (mm = 11) {
   // payMonth = payReceive.nov
